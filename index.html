@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memory Lane</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Tamil:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1B1815;
@@ -28,12 +28,59 @@
       radial-gradient(ellipse at 90% 0%, rgba(62,110,100,0.16), transparent 50%),
       var(--ink);
     color:var(--text-hi);
-    font-family:'Work Sans', sans-serif;
+    font-family:'Work Sans', 'Noto Sans Tamil', sans-serif;
     min-height:100vh;
     display:flex; align-items:center; justify-content:center;
     padding:32px 16px;
   }
   .wrap{width:100%;max-width:440px;}
+  .tamil{font-family:'Noto Sans Tamil','Work Sans',sans-serif;}
+
+  /* ---------- LANDING PAGE ---------- */
+  .landing{
+    background:var(--surface); border-radius:26px; border:1px solid var(--line);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+    padding:48px 30px 36px; text-align:center; position:relative; overflow:hidden;
+  }
+  .landing::before{
+    content:""; position:absolute; inset:-40% -20% auto -20%; height:260px;
+    background:radial-gradient(circle, rgba(217,142,59,0.22), transparent 65%);
+    pointer-events:none;
+  }
+  .landing-frames{
+    display:flex; justify-content:center; gap:6px; margin-bottom:22px;
+  }
+  .landing-frames span{
+    width:34px;height:34px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--marigold-soft), var(--marigold) 60%, #8a5722 100%);
+    box-shadow:0 0 0 3px rgba(217,142,59,0.14);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px;
+  }
+  .landing-frames span:nth-child(2){background:radial-gradient(circle at 35% 30%, var(--teal-soft), var(--teal) 60%, #1f3733 100%); box-shadow:0 0 0 3px rgba(62,110,100,0.18);}
+  .landing-frames span:nth-child(3){background:radial-gradient(circle at 35% 30%, #E0C9A6, var(--marigold) 70%, #6b431a 100%); box-shadow:0 0 0 3px rgba(217,142,59,0.14);}
+  .brand{
+    font-family:'Fraunces',serif; font-weight:700; font-size:34px; letter-spacing:-0.01em;
+    margin:0 0 8px; position:relative;
+  }
+  .brand em{color:var(--marigold-soft); font-style:normal;}
+  .tagline{
+    font-size:14px; color:var(--text-lo); line-height:1.6; margin:0 0 4px; position:relative;
+  }
+  .tagline.tamil-line{font-size:14.5px; margin-bottom:26px;}
+  .start-btn{
+    margin-top:14px; width:100%; border:none; cursor:pointer;
+    background:var(--marigold); color:#241705; font-weight:600; font-size:16px;
+    font-family:'Work Sans'; padding:15px 20px; border-radius:999px;
+    box-shadow:0 14px 30px -12px rgba(217,142,59,0.55);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .start-btn:active{transform:translateY(1px);}
+  .start-sub{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.06em;
+    color:var(--text-lo); margin-top:14px; opacity:.75;
+  }
+  .hidden{display:none !important;}
 
   .eyebrow{
     font-family:'IBM Plex Mono', monospace;
@@ -65,6 +112,11 @@
     padding:16px 18px 12px; display:flex;align-items:center;gap:12px;
     border-bottom:1px solid var(--line);
   }
+  .back-btn{
+    background:transparent;border:1px solid var(--line);color:var(--text-lo);
+    width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex:none;font-size:14px;
+  }
   .orb-wrap{ perspective:400px; }
   .orb{
     width:40px;height:40px;border-radius:50%;
@@ -78,11 +130,13 @@
   .orb img{width:100%;height:100%;object-fit:cover;}
   .screen-head .who{font-family:'Fraunces',serif;font-weight:600;font-size:16px;}
   .screen-head .status{font-size:11.5px;color:var(--teal-soft);font-family:'IBM Plex Mono',monospace;}
-  .mute-btn{
-    margin-left:auto; background:transparent;border:1px solid var(--line);color:var(--text-lo);
+  .head-actions{margin-left:auto;display:flex;gap:8px;}
+  .icon-btn{
+    background:transparent;border:1px solid var(--line);color:var(--text-lo);
     border-radius:8px;padding:7px 10px;cursor:pointer;font-size:14px;
   }
-  .mute-btn.on{border-color:var(--teal-soft);color:var(--teal-soft);}
+  .icon-btn.on{border-color:var(--teal-soft);color:var(--teal-soft);}
+  .icon-btn.danger:hover{border-color:var(--red);color:var(--red);}
 
   .persona-row{
     display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);
@@ -147,7 +201,7 @@
     flex:1; padding:16px; display:flex; flex-direction:column; gap:12px;
     overflow-y:auto; max-height:340px;
   }
-  .msg{max-width:78%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5;}
+  .msg{max-width:78%;padding:11px 14px;border-radius:14px;font-size:15px;line-height:1.55;}
   .msg.them{
     background:rgba(242,233,216,0.06); border:1px solid var(--line);
     align-self:flex-start; border-bottom-left-radius:4px;
@@ -168,141 +222,170 @@
   .composer{ display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line); align-items:center; }
   .composer input{
     flex:1;background:rgba(242,233,216,0.05);border:1px solid var(--line);
-    border-radius:999px;padding:11px 16px;color:var(--text-hi);font-size:14px;font-family:'Work Sans';
+    border-radius:999px;padding:12px 16px;color:var(--text-hi);font-size:15px;font-family:'Work Sans';
   }
   .composer input:focus{outline:none;border-color:var(--marigold-soft);}
   .composer button{border:none;font-weight:600;cursor:pointer;border-radius:999px;}
-  .send-btn{background:var(--marigold);color:#241705;padding:0 18px;height:38px;font-size:13.5px;}
+  .send-btn{background:var(--marigold);color:#241705;padding:0 18px;height:40px;font-size:13.5px;}
   .send-btn:disabled{opacity:.5;cursor:default;}
   .mic-btn{
     background:transparent;border:1px solid var(--line);color:var(--text-lo);
-    width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:15px;flex:none;
+    width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:16px;flex:none;
   }
   .mic-btn.listening{background:var(--red);border-color:var(--red);color:#fff;animation:pulse 1.1s infinite;}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(178,59,59,.55);}70%{box-shadow:0 0 0 10px rgba(178,59,59,0);}100%{box-shadow:0 0 0 0 rgba(178,59,59,0);}}
   .mic-hint{font-size:11px;color:var(--text-lo);text-align:center;padding:0 14px 10px;font-family:'IBM Plex Mono',monospace;}
+
+  .confirm-overlay{
+    position:absolute; inset:0; background:rgba(10,9,7,0.72); display:none;
+    align-items:flex-end; justify-content:center; z-index:5; border-radius:24px;
+  }
+  .confirm-overlay.open{display:flex;}
+  .confirm-sheet{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px 18px 0 0;
+    width:100%; padding:22px 20px 24px; text-align:center;
+  }
+  .confirm-sheet h3{font-family:'Fraunces',serif;font-size:18px;margin:0 0 8px;}
+  .confirm-sheet p{font-size:13px;color:var(--text-lo);line-height:1.6;margin:0 0 18px;}
+  .confirm-row{display:flex;gap:10px;}
+  .confirm-row button{
+    flex:1;padding:12px;border-radius:999px;border:none;font-family:'Work Sans';font-weight:600;
+    font-size:13.5px;cursor:pointer;
+  }
+  .confirm-cancel{background:transparent;border:1px solid var(--line) !important;color:var(--text-hi);}
+  .confirm-delete{background:var(--red);color:#fff;}
 
   input[type=file]{display:none;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Memory Lane</div>
 
-  <div class="filmframe">
-    <div class="sprockets"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="phone">
-      <div class="screen">
-        <div class="screen-head">
-          <div class="orb-wrap"><div class="orb" id="orb"><img id="orbImg" style="display:none;"></div></div>
-          <div>
-            <div class="who" id="personaName">Father</div>
-            <div class="status" id="personaStatus">● present</div>
-          </div>
-          <button class="mute-btn on" id="muteBtn" title="Toggle voice replies">🔊</button>
-        </div>
+  <div id="landingPage">
+    <div class="eyebrow">Memory Lane</div>
+    <div class="landing">
+      <div class="landing-frames"><span>👨</span><span>👵</span><span>👦</span></div>
+      <h1 class="brand"><em>Memory</em> Lane</h1>
+      <p class="tagline">Text or talk with a family voice, in your own words — Tamil, English, or both.</p>
+      <p class="tagline tamil-line tamil">அப்பா, அம்மா, தாத்தா, பாட்டி… யாருக்கு வேணும்னாலும் பேசலாம்.</p>
+      <button class="start-btn" id="startBtn">💬 Pesalam Vaa — Let's Talk</button>
+      <div class="start-sub">TANGLISH · தமிழ் · ENGLISH</div>
+    </div>
+  </div>
 
-        <div class="persona-row" id="personaRow"></div>
+  <div id="chatApp" class="hidden">
+    <div class="eyebrow">Memory Lane</div>
 
-        <div class="upload-row">
-          <button class="upload-btn" id="uploadBtn">＋ photo</button>
-          <input type="file" id="fileInput" accept="image/*">
-          <div class="lang-toggle" id="langToggle">
-            <button class="lang-opt active" data-lang="tanglish">Tanglish</button>
-            <button class="lang-opt" data-lang="tamil">தமிழ்</button>
-            <button class="lang-opt" data-lang="english">English</button>
-          </div>
-        </div>
-
-        <div class="voice-panel" id="voicePanel">
-          <div class="vp-head" id="vpHead">
-            <span class="vp-title">Clone their real voice (optional)</span>
-            <span class="vp-caret">▾</span>
-          </div>
-          <div class="vp-body">
-            <div class="consent-row"><label><input type="checkbox" id="consentBox"> I have this person's permission to clone their voice</label></div>
-            <input type="password" id="elKey" placeholder="Your ElevenLabs API key">
-            <div class="vp-row">
-              <button class="vp-btn" id="vpSampleBtn">＋ upload sample (.mp3/.wav, 30s+)</button>
-              <button class="vp-btn" id="vpRecordBtn" type="button">🎙 record sample instead</button>
-              <input type="file" id="vpSampleInput" accept="audio/*">
-              <button class="vp-btn" id="vpCloneBtn" disabled>Clone this voice</button>
+    <div class="filmframe">
+      <div class="sprockets"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="confirm-overlay" id="confirmOverlay">
+            <div class="confirm-sheet">
+              <h3>Delete this conversation?</h3>
+              <p>Every message with <span id="confirmName">this person</span> will be removed from this device. This can't be undone.</p>
+              <div class="confirm-row">
+                <button class="confirm-cancel" id="confirmCancel">Cancel</button>
+                <button class="confirm-delete" id="confirmDeleteBtn">Delete chat</button>
+              </div>
             </div>
-            <div class="vp-status" id="vpStatus">No voice cloned yet — replies use your browser's preview voice.</div>
-            <div class="vp-note">Your key and sample stay in this browser tab, sent straight to ElevenLabs — never saved by this app.</div>
           </div>
-        </div>
 
-        <div class="chat" id="chat"></div>
-        <div class="mic-hint" id="micHint"></div>
+          <div class="screen-head">
+            <button class="back-btn" id="backBtn" title="Back">←</button>
+            <div class="orb-wrap"><div class="orb" id="orb"><img id="orbImg" style="display:none;"></div></div>
+            <div>
+              <div class="who" id="personaName">Father</div>
+              <div class="status" id="personaStatus">● present</div>
+            </div>
+            <div class="head-actions">
+              <button class="icon-btn on" id="muteBtn" title="Toggle voice replies">🔊</button>
+              <button class="icon-btn danger" id="deleteBtn" title="Delete this conversation">🗑</button>
+            </div>
+          </div>
 
-        <div class="composer">
-          <button class="mic-btn" id="micBtn" title="Talk">🎤</button>
-          <input type="text" id="msgInput" placeholder="Type or tap the mic to talk…" />
-          <button class="send-btn" id="sendBtn">Send</button>
+          <div class="persona-row" id="personaRow"></div>
+
+          <div class="upload-row">
+            <button class="upload-btn" id="uploadBtn">＋ photo</button>
+            <input type="file" id="fileInput" accept="image/*">
+            <div class="lang-toggle" id="langToggle">
+              <button class="lang-opt active" data-lang="tanglish">Tanglish</button>
+              <button class="lang-opt" data-lang="tamil">தமிழ்</button>
+              <button class="lang-opt" data-lang="english">English</button>
+            </div>
+          </div>
+
+          <div class="voice-panel" id="voicePanel">
+            <div class="vp-head" id="vpHead">
+              <span class="vp-title">Clone their real voice (optional)</span>
+              <span class="vp-caret">▾</span>
+            </div>
+            <div class="vp-body">
+              <div class="consent-row"><label><input type="checkbox" id="consentBox"> I have this person's permission to clone their voice</label></div>
+              <input type="password" id="elKey" placeholder="Your ElevenLabs API key">
+              <div class="vp-row">
+                <button class="vp-btn" id="vpSampleBtn">＋ upload sample (.mp3/.wav, 30s+)</button>
+                <button class="vp-btn" id="vpRecordBtn" type="button">🎙 record sample instead</button>
+                <input type="file" id="vpSampleInput" accept="audio/*">
+                <button class="vp-btn" id="vpCloneBtn" disabled>Clone this voice</button>
+              </div>
+              <div class="vp-status" id="vpStatus">No voice cloned yet — replies use your browser's preview voice.</div>
+              <div class="vp-note">Your key and sample stay in this browser tab, sent straight to ElevenLabs — never saved by this app. Cloning is for someone who's given you permission, not for recreating a voice without their say-so.</div>
+            </div>
+          </div>
+
+          <div class="chat" id="chat"></div>
+          <div class="mic-hint" id="micHint"></div>
+
+          <div class="composer">
+            <button class="mic-btn" id="micBtn" title="Talk">🎤</button>
+            <input type="text" id="msgInput" placeholder="Type or tap the mic to talk…" />
+            <button class="send-btn" id="sendBtn">Send</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
 <script>
 const personas = {
   "Father": {
-    greet:{
-      tanglish:"Vaa da/ma, சாப்பாடு ஆச்சா? Naan unna pathi thaan yosichitu irundhen.",
-      tamil:"வா கண்ணா, சாப்பாடு ஆச்சா? நான் உன்னை பத்தி தான் யோசிச்சிட்டு இருந்தேன்.",
-      english:"Hey da/ma, did you eat yet? I was just thinking about you."
-    },
+    emoji:"👨",
+    opener:{ tanglish:"Hi da/ma 👋", tamil:"ஹாய் கண்ணா 👋", english:"Hi 👋" },
     base:"a warm, protective Tamil father figure texting his grown child. Ask about food, health, work, safety like a real appa. Caring, a little strict-but-loving."
   },
   "Mother": {
-    greet:{
-      tanglish:"கண்ணா, சாப்பிட்டியா? Unaku enna venum sollu, naan iruken.",
-      tamil:"கண்ணா, சாப்பிட்டியா? உனக்கு என்ன வேணும் சொல்லு, நான் இருக்கேன்.",
-      english:"Kanna, did you eat? Tell me if you need anything, I'm right here."
-    },
+    emoji:"👩",
+    opener:{ tanglish:"Hi kanna 👋", tamil:"ஹாய் கண்ணா 👋", english:"Hi 👋" },
     base:"a warm, nurturing Tamil mother figure texting her grown child. Full of care about food, sleep, health, gentle worry, occasionally teasing."
   },
   "Son": {
-    greet:{
-      tanglish:"அம்மா/அப்பா, epdi irukeenga? Naan nalla iruken, tension pannadheenga.",
-      tamil:"அம்மா/அப்பா, எப்படி இருக்கீங்க? நான் நல்லா இருக்கேன், டென்ஷன் பண்ணாதீங்க.",
-      english:"Amma/Appa, how are you both doing? I'm doing fine, don't worry."
-    },
+    emoji:"👦",
+    opener:{ tanglish:"Hi amma/appa 👋", tamil:"ஹாய் அம்மா/அப்பா 👋", english:"Hi 👋" },
     base:"a loving grown son texting his parent. Reassuring, casual, respectful, gives small updates about his day."
   },
   "Daughter": {
-    greet:{
-      tanglish:"அம்மா/அப்பா, epdi irukeenga? Ippove veetuku varen sollitu vandhurken.",
-      tamil:"அம்மா/அப்பா, எப்படி இருக்கீங்க? இப்போவே வீட்டுக்கு வரேன் சொல்லிட்டு வந்துர்றேன்.",
-      english:"Amma/Appa, how are you both? Just messaging to say I'll be home soon."
-    },
+    emoji:"👧",
+    opener:{ tanglish:"Hi amma/appa 👋", tamil:"ஹாய் அம்மா/அப்பா 👋", english:"Hi 👋" },
     base:"a warm, chatty grown daughter texting her parent. Affectionate, shares little details of her day, checks on their health."
   },
   "Uncle": {
-    greet:{
-      tanglish:"வாங்க வாங்க, epdi irukeenga family ellam nalla iruka?",
-      tamil:"வாங்க வாங்க, எப்படி இருக்கீங்க, ஃபேமிலி எல்லாம் நல்லா இருக்கா?",
-      english:"Hey hey, how are you doing — is the whole family keeping well?"
-    },
+    emoji:"🧔",
+    opener:{ tanglish:"Hi 👋", tamil:"ஹாய் 👋", english:"Hi 👋" },
     base:"a friendly, slightly jokey Tamil uncle figure texting a younger relative. Warm, humorous, asks about studies/work/family."
   },
   "Grandfather": {
-    greet:{
-      tanglish:"வா தம்பி/பொண்ணு, ippo enna panra, படிச்சுட்டு இருக்கியா?",
-      tamil:"வா தம்பி/பொண்ணு, இப்போ என்ன பண்ற, படிச்சுட்டு இருக்கியா?",
-      english:"Come, my dear — what are you up to these days, still studying hard?"
-    },
+    emoji:"👴",
+    opener:{ tanglish:"Hi thambi/ponnu 👋", tamil:"ஹாய் தம்பி/பொண்ணு 👋", english:"Hi 👋" },
     base:"a gentle, wise Tamil grandfather figure texting his grandchild. Slow, warm, shares small memories or blessings, caring questions."
   },
   "Grandmother": {
-    greet:{
-      tanglish:"கண்ணா என் பேத்தி, சாப்பிட்டியா? Ennaku unna paakanum nu thonuchu.",
-      tamil:"கண்ணா என் பேத்தி, சாப்பிட்டியா? எனக்கு உன்னை பாக்கணும் நு தோணுச்சு.",
-      english:"My dear grandchild, did you eat? I was just missing you and wanted to check in."
-    },
+    emoji:"👵",
+    opener:{ tanglish:"Hi kanna 👋", tamil:"ஹாய் கண்ணா 👋", english:"Hi 👋" },
     base:"a loving, slightly worried Tamil grandmother figure texting her grandchild. Full of blessings, food-worry, warmth."
   }
 };
@@ -314,8 +397,8 @@ let voiceId = null;
 let elApiKey = null;
 let voiceOn = true;
 
-const personaRow = document.getElementById('personaRow');
 const chat = document.getElementById('chat');
+const personaRow = document.getElementById('personaRow');
 const personaName = document.getElementById('personaName');
 const orbImg = document.getElementById('orbImg');
 const orb = document.getElementById('orb');
@@ -325,16 +408,13 @@ const micHint = document.getElementById('micHint');
 Object.keys(personas).forEach(p=>{
   const c = document.createElement('button');
   c.className = 'chip' + (p===currentPersona ? ' active' : '');
-  c.textContent = p;
+  c.textContent = personas[p].emoji + ' ' + p;
   c.onclick = ()=> switchPersona(p);
   c.dataset.p = p;
   personaRow.appendChild(c);
 });
 
-function getGreeting(p, lang){
-  const g = personas[p].greet;
-  return g[lang] || g.tanglish;
-}
+function storageKey(p){ return 'chat:' + p; }
 
 function speechLangCode(){
   if(currentLang === "tamil") return "ta-IN";
@@ -344,11 +424,11 @@ function speechLangCode(){
 function buildSystem(p){
   let langLine;
   if(currentLang === "tamil"){
-    langLine = "Write mostly in fluent, natural Tamil script (Unicode) — real spoken Tamil grammar and word order, not a stiff written/formal register — sprinkling in English only for modern terms the way Tamil people genuinely do.";
+    langLine = "Write entirely in pure Tamil script (Unicode) — real spoken Tamil grammar and word order, natural and warm, not stiff or formal. Do not use English words or Latin script at all, except an unavoidable proper noun.";
   } else if(currentLang === "english"){
-    langLine = "Write in warm, natural English, the way this family member would text/speak if comfortable in English — plain sentences, no Tamil script — but keep a few affectionate Tamil words in Latin script where they'd naturally slip in (da, ma, kanna, di).";
+    langLine = "Write in pure, natural English only — no Tamil words, no Tamil script, no romanized Tamil terms of endearment (no da, ma, kanna, di, etc). Warm and casual English, exactly like this family member would text if they were speaking fully in English.";
   } else {
-    langLine = "Write in natural Tanglish: freely mix real Tamil script words (like என்ன, வா, சாப்பிட்டியா) with English words, not just Latin-transliterated Tamil. This is how Chennai people actually text — not a translation exercise.";
+    langLine = "Write in natural Tanglish: a genuine mix of Tamil script words (like என்ன, வா, சாப்பிட்டியா) and English words in the same sentence, roughly half and half, the way Chennai people actually text day to day. Not mostly-English-with-a-few-Tamil-words, and not a translation exercise.";
   }
   return "You are speaking AS " + personas[p].base + " " + langLine +
     " Keep replies short — 1 to 3 sentences, natural rhythm for both texting and being read aloud." +
@@ -361,28 +441,64 @@ function typingDelay(len){
   return Math.min(2600, 550 + len*16 + Math.random()*400);
 }
 
-function switchPersona(p){
-  currentPersona = p;
-  history = [];
-  personaName.textContent = p;
-  document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', c.dataset.p===p));
-  chat.innerHTML = '';
-  addMsg(getGreeting(p, currentLang), 'them', true);
-}
-
-function addMsg(text, who, speak){
+function renderMsgEl(text, who){
   const div = document.createElement('div');
   div.className = 'msg ' + who;
-  div.innerHTML = text;
+  div.textContent = text;
   const vb = document.createElement('div');
   vb.className = 'voice-btn';
   vb.innerHTML = voiceId ? '▶ play in their voice' : '▶ play';
   vb.onclick = ()=> playVoice(text);
   div.appendChild(vb);
   chat.appendChild(div);
+  return div;
+}
+
+async function loadPersonaChat(p){
+  chat.innerHTML = '';
+  history = [];
+  let saved = null;
+  try{
+    const res = await window.storage.get(storageKey(p), false);
+    saved = res ? JSON.parse(res.value) : null;
+  }catch(err){ saved = null; }
+
+  if(saved && saved.messages && saved.messages.length){
+    saved.messages.forEach(m=>{
+      renderMsgEl(m.text, m.who);
+      history.push({role: m.who==='me' ? 'user' : 'assistant', content: m.text});
+    });
+    chat.scrollTop = chat.scrollHeight;
+  } else {
+    const opener = personas[p].opener[currentLang] || personas[p].opener.tanglish;
+    addMsg(opener, 'them', true);
+  }
+}
+
+async function saveCurrentChat(){
+  const bubbles = Array.from(chat.querySelectorAll('.msg')).map(el=>{
+    const clone = el.cloneNode(true);
+    const vb = clone.querySelector('.voice-btn');
+    if(vb) vb.remove();
+    return { who: el.classList.contains('me') ? 'me' : 'them', text: clone.textContent };
+  });
+  try{
+    await window.storage.set(storageKey(currentPersona), JSON.stringify({messages:bubbles}), false);
+  }catch(err){ /* best effort */ }
+}
+
+function switchPersona(p){
+  currentPersona = p;
+  personaName.textContent = p;
+  document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', c.dataset.p===p));
+  loadPersonaChat(p);
+}
+
+function addMsg(text, who, speak){
+  renderMsgEl(text, who);
   chat.scrollTop = chat.scrollHeight;
   if(who==='them' && speak && voiceOn){ playVoice(text); }
-  return div;
+  saveCurrentChat();
 }
 
 function speakBrowser(text){
@@ -438,10 +554,6 @@ document.querySelectorAll('.lang-opt').forEach(btn=>{
     document.querySelectorAll('.lang-opt').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     currentLang = btn.dataset.lang;
-    if(history.length === 0){
-      chat.innerHTML = '';
-      addMsg(getGreeting(currentPersona, currentLang), 'them', false);
-    }
   };
 });
 
@@ -527,7 +639,6 @@ orb.parentElement.addEventListener('mousemove', (e)=>{
 });
 orb.parentElement.addEventListener('mouseleave', ()=>{ orb.style.transform = "rotateY(0) rotateX(0)"; });
 
-// ---- Voice input / transcription ----
 const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = null;
 let listening = false;
@@ -640,7 +751,34 @@ msgInput.addEventListener('keydown', (e)=>{
   if(e.key==='Enter') sendMessage();
 });
 
-switchPersona("Father");
+const confirmOverlay = document.getElementById('confirmOverlay');
+document.getElementById('deleteBtn').onclick = ()=>{
+  document.getElementById('confirmName').textContent = currentPersona;
+  confirmOverlay.classList.add('open');
+};
+document.getElementById('confirmCancel').onclick = ()=>{
+  confirmOverlay.classList.remove('open');
+};
+document.getElementById('confirmDeleteBtn').onclick = async ()=>{
+  try{
+    await window.storage.delete(storageKey(currentPersona), false);
+  }catch(err){ /* key may not exist yet, that's fine */ }
+  confirmOverlay.classList.remove('open');
+  chat.innerHTML = '';
+  history = [];
+  const opener = personas[currentPersona].opener[currentLang] || personas[currentPersona].opener.tanglish;
+  addMsg(opener, 'them', true);
+};
+
+document.getElementById('startBtn').onclick = ()=>{
+  document.getElementById('landingPage').classList.add('hidden');
+  document.getElementById('chatApp').classList.remove('hidden');
+  switchPersona(currentPersona);
+};
+document.getElementById('backBtn').onclick = ()=>{
+  document.getElementById('chatApp').classList.add('hidden');
+  document.getElementById('landingPage').classList.remove('hidden');
+};
 </script>
 </body>
 </html>
