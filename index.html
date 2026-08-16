@@ -397,6 +397,22 @@ let voiceId = null;
 let elApiKey = null;
 let voiceOn = true;
 
+// --- This build runs inside a Claude.ai artifact, so it uses the artifact's
+// built-in window.storage for persistence (per-user, not shared). ---
+const storage = {
+  async get(key){
+    try{ return await window.storage.get(key, false); }
+    catch(err){ return null; }
+  },
+  async set(key, value){
+    return await window.storage.set(key, value, false);
+  },
+  async delete(key){
+    try{ return await window.storage.delete(key, false); }
+    catch(err){ return null; }
+  }
+};
+
 const chat = document.getElementById('chat');
 const personaRow = document.getElementById('personaRow');
 const personaName = document.getElementById('personaName');
@@ -414,7 +430,7 @@ Object.keys(personas).forEach(p=>{
   personaRow.appendChild(c);
 });
 
-function storageKey(p){ return 'chat:' + p; }
+function storageKey(p){ return 'memory-lane:chat:' + p; }
 
 function speechLangCode(){
   if(currentLang === "tamil") return "ta-IN";
@@ -459,7 +475,7 @@ async function loadPersonaChat(p){
   history = [];
   let saved = null;
   try{
-    const res = await window.storage.get(storageKey(p), false);
+    const res = await storage.get(storageKey(p));
     saved = res ? JSON.parse(res.value) : null;
   }catch(err){ saved = null; }
 
@@ -483,7 +499,7 @@ async function saveCurrentChat(){
     return { who: el.classList.contains('me') ? 'me' : 'them', text: clone.textContent };
   });
   try{
-    await window.storage.set(storageKey(currentPersona), JSON.stringify({messages:bubbles}), false);
+    await storage.set(storageKey(currentPersona), JSON.stringify({messages:bubbles}));
   }catch(err){ /* best effort */ }
 }
 
@@ -626,7 +642,7 @@ document.getElementById('vpCloneBtn').onclick = async ()=>{
     voiceId = data.voice_id;
     vpStatus.textContent = "Voice cloned. Replies will now play in their real voice.";
   }catch(err){
-    vpStatus.textContent = "Couldn't clone from the browser (often blocked by ElevenLabs' CORS policy for direct client calls) — this step is designed to move to a small backend for the real build.";
+    vpStatus.textContent = "Couldn't clone from the browser (ElevenLabs blocks some direct client calls by CORS) — if this keeps failing, route it through the /api/chat-style backend instead of calling ElevenLabs directly from here.";
   }
   document.getElementById('vpCloneBtn').disabled = false;
 };
@@ -712,6 +728,8 @@ async function sendMessage(){
 
   document.getElementById('sendBtn').disabled = true;
   try{
+    // This build runs inside a Claude.ai artifact, which handles auth to
+    // Anthropic's API automatically — no key needed in this code.
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -723,6 +741,11 @@ async function sendMessage(){
       })
     });
     const data = await response.json();
+
+    if(!response.ok){
+      throw new Error((data && data.error && data.error.message) || 'API error');
+    }
+
     let reply = "…";
     if(data && data.content){
       reply = data.content.map(b=> b.text||"").join(" ").trim() || "…";
@@ -740,8 +763,9 @@ async function sendMessage(){
     }
     history.push({role:'assistant', content:reply.replace(/\|\|\|/g,' ')});
   }catch(err){
+    console.error(err);
     typing.remove();
-    addMsg("(connection hiccup — try again)", 'them', false);
+    addMsg("(connection hiccup — check that the backend server is running — try again)", 'them', false);
   }
   document.getElementById('sendBtn').disabled = false;
 }
@@ -761,7 +785,7 @@ document.getElementById('confirmCancel').onclick = ()=>{
 };
 document.getElementById('confirmDeleteBtn').onclick = async ()=>{
   try{
-    await window.storage.delete(storageKey(currentPersona), false);
+    await storage.delete(storageKey(currentPersona));
   }catch(err){ /* key may not exist yet, that's fine */ }
   confirmOverlay.classList.remove('open');
   chat.innerHTML = '';
